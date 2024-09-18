@@ -1,0 +1,74 @@
+@import 'variables';
+@import 'mixins';
+
+:root {
+	@include generate-theme-variants('light');
+}
+
+@media (prefers-color-scheme: dark) {
+// [data-theme='dark'] {
+	:root {
+		@include generate-theme-variants('dark');
+	}
+}
+	
+@media (prefers-color-scheme: dark) {
+// [data-theme='dark'] {
+	html {
+		color-scheme: dark;
+	}
+}
+		
+html,
+body {
+	max-width: 100vw;
+	overflow-x: hidden;
+}
+
+body {
+	@include theme(background-color, background-color);
+	@include theme(color, text-color);
+	font-family: $font-family;
+	font-size: $font-size;
+}
+
+* {
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+a {
+	color: inherit;
+	text-decoration: none;
+}
+
+form {
+	display: flex;
+	flex-direction: column;
+}
+
+h1 {
+	@include generate-font-variants('h1', 'normal');
+}
+h1.bold {
+	@include generate-font-variants('h1', 'bold');
+}
+h2 {
+	@include generate-font-variants('h2', 'normal');
+}
+h2.bold {
+	@include generate-font-variants('h2', 'bold');
+}
+h3 {
+	@include generate-font-variants('h3', 'normal');
+}
+h3.bold {
+	@include generate-font-variants('h3', 'bold');
+}
+p {
+	@include generate-font-variants('p', 'normal');
+}
+p.bold {
+	@include generate-font-variants('p', 'bold');
+}

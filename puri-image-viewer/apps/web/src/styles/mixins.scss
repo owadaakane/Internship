@@ -1,0 +1,27 @@
+@import 'variables';
+
+@mixin generate-theme-variants($theme-name) {
+	$theme: map-get($themes, $theme-name);
+	
+	@each $key, $value in $theme {
+		--#{$key}: #{$value};
+	}
+}
+
+@mixin theme($property, $key) {
+	#{$property}: var(--#{$key});
+}
+
+@mixin generate-font-variants($header, $weight) {
+	$props: map-get(map-get($fonts, $header), $weight);
+	
+	@each $key, $value in $props {
+		#{$key}: #{$value};
+	}
+}
+
+@mixin spacing($property, $level) {
+	$variable: map-get($spacing, $level);
+	
+	#{$property}: #{$variable};
+}

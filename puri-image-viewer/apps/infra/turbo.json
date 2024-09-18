@@ -1,0 +1,21 @@
+{
+    "$schema": "https://turbo.build/schema.json",
+    "extends": ["//"],
+    "tasks": {
+        "synth": {
+            "outputs": ["cdk.out/**"]
+        },
+        "diff": {
+            "outputs": ["cdk.out/**"]
+        },
+        "deploy": {
+            "outputs": ["cdk.out/**"],
+            "interactive": true,
+            "cache": false
+        },
+        "destroy": {
+            "interactive": true,
+            "cache": false
+        }
+    }
+}
