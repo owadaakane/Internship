@@ -26,12 +26,13 @@ export default function Page() {
         setError('Username or Password is Empty.');
         return;
       }
-      if (await login(username, password)) {
+      const loginResult = await login(username, password);
+      if (loginResult) {
         router.push('/');
       }
 
       const idToken = await login(username, password);
-      confirm(`Login is ${idToken ? 'success' : 'failure'}.`);
+      confirm(`Login is ${loginResult ? 'success' : 'failure'}.`);
     },
     [login, username, password, router]
   );
