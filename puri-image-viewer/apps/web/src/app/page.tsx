@@ -10,6 +10,7 @@ import { API_BASE_URL } from '@web/constants';
 import Loading from '@web/components/Loading';
 import Button from '@web/components/Button';
 import Image from 'next/image';
+import ImageModal from '@web/components/ImageModal';
 
 type CustomImage = {
   readonly size: number;
@@ -86,7 +87,7 @@ export default function Page() {
   };
 
   return (
-    <>
+    <div>
       {isLoading && <Loading />}
       <div className={styles.container}>
         <form className={styles.form} onSubmit={handleSubmit}>
@@ -120,31 +121,14 @@ export default function Page() {
         </div>
       </div>
       {selectedImageIndex !== null && (
-        <div className={styles.overlay}>
-          <button className={styles.closeButton} onClick={handleCloseModal}>
-            &times;
-          </button>
-          <button className={styles.prevButton} onClick={handlePrevImage}>
-            &lt;
-          </button>
-          <div className={styles.modal}>
-            <Image
-              loader={() => images[selectedImageIndex]?.url || ''}
-              src='placeholder.png'
-              alt={images[selectedImageIndex]?.name || 'Image'}
-              width={800}
-              height={0} // heightは自動計算
-              className={styles.modalImage}
-              objectFit='contain'
-              layout='intrinsic'
-              sizes='(max-height: 100vh) 100vh' // 画像の高さが画面の高さを超えたら画面の高さに合わせる ようにしたい
-            />
-          </div>
-          <button className={styles.nextButton} onClick={handleNextImage}>
-            &gt;
-          </button>
-        </div>
+        <ImageModal
+          images={images}
+          currentImageIndex={selectedImageIndex}
+          onClose={handleCloseModal}
+          onPrev={handlePrevImage}
+          onNext={handleNextImage}
+        />
       )}
-    </>
+    </div>
   );
 }
