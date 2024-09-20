@@ -30,8 +30,6 @@ export default function Page() {
       if (loginResult) {
         router.push('/');
       }
-
-      const idToken = await login(username, password);
       confirm(`Login is ${loginResult ? 'success' : 'failure'}.`);
     },
     [login, username, password, router]
