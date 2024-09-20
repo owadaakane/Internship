@@ -32,7 +32,7 @@ export default function Page() {
       }
       confirm(`Login is ${loginResult ? 'success' : 'failure'}.`);
     },
-    [login, username, password, router]
+    [login, username, password]
   );
 
   return (

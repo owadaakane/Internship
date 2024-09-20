@@ -62,7 +62,7 @@ export default function Page() {
       setImages(result);
       setIsLoading(false);
     },
-    [inputSealId, idToken, router]
+    [inputSealId, idToken]
   );
 
   const handleImageClick = (index: number) => {
