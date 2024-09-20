@@ -24,7 +24,7 @@ export default function Page() {
   const [inputSealId, setInputSealId] = useState('');
   const [images, setImages] = useState<CustomImage[]>([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedImageIndex, setselectedImageIndex] = useState<number | null>(
+  const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
     null
   );
 
@@ -66,22 +66,22 @@ export default function Page() {
   );
 
   const handleImageClick = (index: number) => {
-    setselectedImageIndex(index);
+    setSelectedImageIndex(index);
   };
 
   const handleCloseModal = () => {
-    setselectedImageIndex(null);
+    setSelectedImageIndex(null);
   };
 
   const handleNextImage = () => {
     if (selectedImageIndex !== null && selectedImageIndex < images.length - 1) {
-      setselectedImageIndex(selectedImageIndex + 1);
+      setSelectedImageIndex(selectedImageIndex + 1);
     }
   };
 
   const handlePrevImage = () => {
     if (selectedImageIndex !== null && selectedImageIndex > 0) {
-      setselectedImageIndex(selectedImageIndex - 1);
+      setSelectedImageIndex(selectedImageIndex - 1);
     }
   };
 
@@ -134,7 +134,7 @@ export default function Page() {
               alt={images[selectedImageIndex]?.name || 'Image'}
               width={800}
               height={0} // heightは自動計算
-              className={styles.modalimage}
+              className={styles.modalImage}
               objectFit='contain'
               layout='intrinsic'
               sizes='(max-height: 100vh) 100vh' // 画像の高さが画面の高さを超えたら画面の高さに合わせる ようにしたい
