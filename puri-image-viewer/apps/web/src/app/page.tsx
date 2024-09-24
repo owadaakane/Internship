@@ -1,16 +1,14 @@
 // 画像検索・表示ページ
 'use client';
 
-import styles from './page.module.scss';
 import { useCallback, useEffect, useState } from 'react';
 import authStore from '@web/stores/authStore';
 import { useRouter } from 'next/navigation';
 import { useStore } from 'zustand';
 import { API_BASE_URL } from '@web/constants';
 import Loading from '@web/components/Loading';
-import Button from '@web/components/Button';
-import Image from 'next/image';
 import ImageModal from '@web/components/ImageModal';
+import ImageSearch from '@web/components/ImageSearch';
 
 type CustomImage = {
   readonly size: number;
@@ -89,37 +87,12 @@ export default function Page() {
   return (
     <div>
       {isLoading && <Loading />}
-      <div className={styles.container}>
-        <form className={styles.form} onSubmit={handleSubmit}>
-          <input
-            id='sealId'
-            type='text'
-            placeholder='id'
-            onChange={(e) => setInputSealId(e.target.value)}
-            className={styles.input}
-          />
-          <Button buttonName='Search' />
-        </form>
-        <div className={styles.imagesContainer}>
-          {images.map((image, index) => (
-            <div
-              key={image.name}
-              onClick={() => handleImageClick(index)}
-              className={styles.imageWrapper}
-            >
-              <Image
-                loader={() => image.url}
-                src='placeholder.png'
-                alt={image.name}
-                width={200}
-                height={200}
-                className={styles.image}
-                objectFit='cover'
-              />
-            </div>
-          ))}
-        </div>
-      </div>
+      <ImageSearch
+        images={images}
+        setInputSealId={setInputSealId}
+        handleImageClick={handleImageClick}
+        handleSubmit={handleSubmit}
+      />
       {selectedImageIndex !== null && (
         <ImageModal
           images={images}
