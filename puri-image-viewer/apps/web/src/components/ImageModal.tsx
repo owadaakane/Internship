@@ -40,7 +40,7 @@ const ImageModal: React.FC<ImageModalProps> = ({
           className={styles.modalImage}
           objectFit='contain'
           layout='intrinsic'
-          sizes='(max-height: 100vh) 100vh' // 画像の高さが画面の高さを超えたら画面の高さに合わせる ようにしたい
+          sizes='(max-height: 100vh) 100vh' // 画像の高さが画面の高さを超えたら画面の高さに合わせる
         />
       </div>
       <button className={styles.nextButton} onClick={onNext}>

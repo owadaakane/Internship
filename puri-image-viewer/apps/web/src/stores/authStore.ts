@@ -16,23 +16,31 @@ const authStoreCreator: StateCreator<AuthStore> = (set) => ({
   login: async (username, password) => {
     set({ isLoggingIn: true });
 
-    const response = await fetch(`${API_BASE_URL}/auth`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, password }),
-    });
-    if (!response.ok) {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, password }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to authenticate');
+      }
+
+      const result = await response.json();
+      const idToken = IDToken.from(result.idToken);
+
+      set({ idToken, isLoggingIn: false });
+
+      return idToken;
+    } catch (error) {
+      console.error('Login error:', error);
+
       set({ idToken: undefined, isLoggingIn: false });
       return undefined;
     }
-    const result = await response.json();
-    const idToken = IDToken.from(result.idToken);
-
-    set({ idToken, isLoggingIn: false });
-
-    return idToken;
   },
 });
 
