@@ -2,6 +2,7 @@ import { StateCreator, createStore } from 'zustand/vanilla';
 import { IDToken } from '@web/lib/auth/types';
 import { API_BASE_URL } from '@web/constants';
 import { persist } from 'zustand/middleware';
+import { loadingStore } from './loadingStore';
 
 interface AuthStore {
   readonly idToken?: IDToken;
@@ -14,6 +15,7 @@ const authStoreCreator: StateCreator<AuthStore> = (set) => ({
   isLoggingIn: false,
 
   login: async (username, password) => {
+    loadingStore.getState().setLoading(true);
     set({ isLoggingIn: true });
 
     try {
@@ -40,6 +42,8 @@ const authStoreCreator: StateCreator<AuthStore> = (set) => ({
 
       set({ idToken: undefined, isLoggingIn: false });
       return undefined;
+    } finally {
+      loadingStore.getState().setLoading(false);
     }
   },
 });

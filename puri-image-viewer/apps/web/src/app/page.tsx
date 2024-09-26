@@ -9,6 +9,7 @@ import { API_BASE_URL } from '@web/constants';
 import Loading from '@web/components/Loading';
 import ImageModal from '@web/components/ImageModal';
 import ImageSearch from '@web/components/ImageSearch';
+import { loadingStore } from '@web/stores/loadingStore';
 
 type CustomImage = {
   readonly size: number;
@@ -20,9 +21,10 @@ type CustomImage = {
 export default function Page() {
   const router = useRouter();
   const idToken = useStore(authStore, (state) => state.idToken);
+  const isLoading = useStore(loadingStore, (state) => state.isLoading);
+  const setLoading = useStore(loadingStore, (state) => state.setLoading);
   const [inputSealId, setInputSealId] = useState('');
   const [images, setImages] = useState<CustomImage[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState<number | null>(
     null
   );
@@ -38,28 +40,37 @@ export default function Page() {
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent<HTMLFormElement>) => {
-      setIsLoading(true);
+      setLoading(true);
       e.preventDefault();
       if (!idToken || idToken.expired) {
         router.replace('/login');
+        setLoading(false);
         return;
       }
-      const response = await fetch(
-        `${API_BASE_URL}/seals/${inputSealId}/images`,
-        {
-          method: 'GET',
-          headers: {
-            Authorization: idToken?.raw,
-          },
+
+      try {
+        const response = await fetch(
+          `${API_BASE_URL}/seals/${inputSealId}/images`,
+          {
+            method: 'GET',
+            headers: {
+              Authorization: idToken?.raw,
+            },
+          }
+        );
+        if (!response.ok) {
+          setImages([]);
+          setLoading(false);
+          return;
         }
-      );
-      if (!response.ok) {
+        const result = (await response.json()) as CustomImage[];
+        setImages(result);
+      } catch (error) {
+        console.error('Error:', error);
         setImages([]);
-        return;
+      } finally {
+        setLoading(false);
       }
-      const result = (await response.json()) as CustomImage[];
-      setImages(result);
-      setIsLoading(false);
     },
     [inputSealId, idToken]
   );
