@@ -5,11 +5,11 @@ import { useCallback, useEffect, useState } from 'react';
 import authStore from '@web/stores/authStore';
 import { useRouter } from 'next/navigation';
 import { useStore } from 'zustand';
-import { API_BASE_URL } from '@web/constants';
 import Loading from '@web/components/Loading';
 import ImageModal from '@web/components/ImageModal';
 import ImageSearch from '@web/components/ImageSearch';
 import { loadingStore } from '@web/stores/loadingStore';
+import { fetchSealImages } from '@web/services/apiClient';
 
 type CustomImage = {
   readonly size: number;
@@ -49,24 +49,9 @@ export default function Page() {
       }
 
       try {
-        const response = await fetch(
-          `${API_BASE_URL}/seals/${inputSealId}/images`,
-          {
-            method: 'GET',
-            headers: {
-              Authorization: idToken?.raw,
-            },
-          }
-        );
-        if (!response.ok) {
-          setImages([]);
-          setLoading(false);
-          return;
-        }
-        const result = (await response.json()) as CustomImage[];
+        const result = await fetchSealImages(inputSealId, idToken.raw);
         setImages(result);
       } catch (error) {
-        console.error('Error:', error);
         setImages([]);
       } finally {
         setLoading(false);
