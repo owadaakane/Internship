@@ -1,3 +1,11 @@
+type Props = {
+  title: string;
+  id: string;
+  type: string;
+  placeholder: string;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
 /**
  * ラベル付きの入力フィールドをレンダリングする。
  *
@@ -10,15 +18,6 @@
  * @param {function} props.onChange - 入力変更を処理するコールバック関数。
  * @returns {JSX.Element} レンダリングされたInputTextコンポーネント。
  */
-
-type Props = {
-  title: string;
-  id: string;
-  type: string;
-  placeholder: string;
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-};
-
 export default function InputText(props: Props) {
   return (
     <div>
