@@ -1,0 +1,29 @@
+@import 'variables';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background-color: var(--background-color);
+  background-size: cover;
+  background-position: center;
+  padding: 2rem;
+  transition: background-color 0.3s ease;
+}
+
+.form {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: row;
+
+  .input {
+    width: 100%;
+    border-radius: calc(0.5rem + $font-size);
+    border-width: 0.075rem;
+    border-style: solid;
+    font-size: $font-size;
+    padding: 0.5rem 1rem;
+    background-color: transparent;
+  }
+}
