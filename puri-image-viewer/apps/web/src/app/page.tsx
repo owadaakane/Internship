@@ -10,13 +10,8 @@ import ImageModal from '@web/components/ImageModal';
 import ImageSearch from '@web/components/ImageSearch';
 import { loadingStore } from '@web/stores/loadingStore';
 import { fetchSealImages } from '@web/services/apiClient';
-
-type CustomImage = {
-  readonly size: number;
-  readonly name: string;
-  readonly lastModified: Date;
-  readonly url: string;
-};
+import ImageList from '@web/components/ImageList';
+import { CustomImage } from '@web/types/types';
 
 export default function Page() {
   const router = useRouter();

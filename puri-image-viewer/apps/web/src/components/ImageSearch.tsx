@@ -1,7 +1,8 @@
-import Image from 'next/image';
 import React from 'react';
 import Button from './Button';
 import styles from './ImageSearch.module.scss';
+import ImageList from './ImageList';
+import { CustomImage } from '@web/types/types';
 
 interface ImageData {
   name: string;
@@ -9,7 +10,7 @@ interface ImageData {
 }
 
 interface ImageSearchProps {
-  images: ImageData[];
+  images: CustomImage[];
   setInputSealId: (value: string) => void;
   handleImageClick: (index: number) => void;
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
@@ -33,25 +34,7 @@ const ImageSearch: React.FC<ImageSearchProps> = ({
         />
         <Button buttonName='Search' />
       </form>
-      <div className={styles.imagesContainer}>
-        {images.map((image, index) => (
-          <div
-            key={image.name}
-            onClick={() => handleImageClick(index)}
-            className={styles.imageWrapper}
-          >
-            <Image
-              loader={() => image.url}
-              src='placeholder.png'
-              alt={image.name}
-              width={200}
-              height={200}
-              className={styles.image}
-              objectFit='cover'
-            />
-          </div>
-        ))}
-      </div>
+      <ImageList images={images} handleImageClick={handleImageClick} />
     </div>
   );
 };
